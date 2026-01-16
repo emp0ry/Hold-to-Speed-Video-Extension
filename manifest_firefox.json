@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Hold to Speed Video",
-  "version": "3.3.0",
+  "version": "3.3.1",
   "description": "Hold a key (default Z) to temporarily speed up any HTML5 video.",
   "browser_specific_settings": {
     "gecko": {
