@@ -2,7 +2,7 @@
 
 Hold a single key to temporarily speed up any HTML5 video.
 
-<img width="330" height="428" alt="image" src="https://github.com/user-attachments/assets/d6e55962-e189-4cff-825e-d6faa2274f93" />
+<img width="330" height="428" alt="image" src="https://github.com/user-attachments/assets/e760b4fa-c4b1-4961-9cc6-bb00316f74b1" />
 
 - **Normal speed:** 1.0× (default)
 - **Fast speed (while holding):** 2.0× (default)
