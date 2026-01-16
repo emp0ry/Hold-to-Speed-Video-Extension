@@ -1,4 +1,7 @@
 # Hold to Speed Video
+[![GitHub release](https://img.shields.io/github/v/release/emp0ry/Hold-to-Speed-Video-Extension?label=Latest%20Version)](https://github.com/emp0ry/Hold-to-Speed-Video-Extension/releases/latest)
+[![GitHub downloads](https://img.shields.io/github/downloads/emp0ry/Hold-to-Speed-Video-Extension/total.svg)](https://github.com/emp0ry/Hold-to-Speed-Video-Extension/releases/latest)
+[![License](https://img.shields.io/github/license/emp0ry/Hold-to-Speed-Video-Extension)](LICENSE.txt)
 
 Hold a single key to temporarily speed up any HTML5 video.
 
