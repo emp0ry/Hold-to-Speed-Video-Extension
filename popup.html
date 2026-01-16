@@ -1,0 +1,197 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hold to Speed Video</title>
+  <style>
+    :root{
+      --bg: #0b0c10;
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.64);
+      --border: rgba(255,255,255,.12);
+      --shadow: 0 16px 40px rgba(0,0,0,.35);
+    }
+    *{ box-sizing: border-box; }
+    body{
+      margin: 0;
+      width: 320px;
+      background:
+        radial-gradient(1200px 800px at -20% -20%, rgba(124,92,255,.25), transparent 55%),
+        radial-gradient(900px 700px at 120% 0%, rgba(0,208,255,.18), transparent 55%),
+        var(--bg);
+      color: var(--text);
+      font: 13px/1.35 system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      padding: 14px;
+    }
+    .header{ display:flex; gap:12px; align-items:center; margin-bottom:12px; }
+    .logo{
+      width:34px; height:34px; border-radius: 12px;
+      background: linear-gradient(135deg, rgba(124,92,255,.9), rgba(0,208,255,.7));
+      display:grid; place-items:center;
+      box-shadow: var(--shadow);
+      flex: 0 0 auto;
+    }
+    .logo img{ width: 20px; height: 20px; }
+    .title{ display:flex; flex-direction:column; gap:2px; min-width: 0; }
+    .title h1{ margin:0; font-size: 14px; letter-spacing: .2px; }
+    .title p{ margin:0; color: var(--muted); font-size: 12px; }
+
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.06));
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 12px;
+      box-shadow: var(--shadow);
+    }
+
+    .row{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
+    .row + .row{ margin-top: 12px; }
+
+    .label{ display:flex; flex-direction:column; gap:3px; }
+    .label strong{ font-size: 12.5px; }
+    .label span{ color: var(--muted); font-size: 11.5px; }
+
+    .switch{ position: relative; width: 48px; height: 28px; flex: 0 0 auto; }
+    .switch input{ position:absolute; opacity: 0; width: 1px; height: 1px; }
+    .switch .track{
+      position:absolute; inset:0;
+      border-radius: 999px;
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.14);
+      transition: background .15s ease, border-color .15s ease;
+    }
+    .switch .thumb{
+      position:absolute; top:3px; left:3px;
+      width:22px; height:22px;
+      border-radius:999px;
+      background: rgba(255,255,255,.92);
+      box-shadow: 0 6px 18px rgba(0,0,0,.35);
+      transition: transform .15s ease, background .15s ease;
+    }
+    .switch input:checked ~ .track{ background: rgba(124,92,255,.38); border-color: rgba(124,92,255,.55); }
+    .switch input:checked ~ .thumb{ transform: translateX(20px); background: rgba(255,255,255,.98); }
+
+    .box{
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 14px;
+      padding: 10px;
+      margin-top: 12px; /* stacks boxes -> Fast box on new line */
+    }
+    .box h3{ margin:0 0 8px 0; font-size: 12px; color: rgba(255,255,255,.86); }
+    .control{ display:flex; align-items:center; gap:8px; }
+    input[type="number"], input[type="text"]{
+      width: 92px;
+      background: rgba(0,0,0,.20);
+      border: 1px solid rgba(255,255,255,.14);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 8px 10px;
+      outline: none;
+      font-size: 13px;
+    }
+    input[type="text"]{ width: 80px; }
+
+    button{
+      flex: 1;
+      min-width: 0;
+      border: 0;
+      padding: 8px 10px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(124,92,255,.95), rgba(0,208,255,.75));
+      color: rgba(255,255,255,.95);
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 10px 24px rgba(124,92,255,.22);
+      transition: transform .06s ease, filter .12s ease;
+    }
+    button:active{ transform: translateY(1px); }
+    button:hover{ filter: brightness(1.03); }
+
+    .hint{
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px dashed rgba(255,255,255,.16);
+      color: var(--muted);
+      font-size: 11.5px;
+    }
+    kbd{
+      background: rgba(255,255,255,.10);
+      border: 1px solid rgba(255,255,255,.14);
+      padding: 2px 6px;
+      border-radius: 7px;
+      color: rgba(255,255,255,.9);
+      font-weight: 800;
+      font-size: 11px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo"><img src="icon.png" alt="Hold to Speed Video"></div>
+    <div class="title">
+      <h1>Hold to Speed Video</h1>
+      <p>Hold <b id="keyHint">Z</b> for fast speed</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="row">
+      <div class="label">
+        <strong>Enable</strong>
+        <span>Turn hold-to-speed on/off</span>
+      </div>
+      <label class="switch" title="Enable">
+        <input id="enabled" type="checkbox" />
+        <span class="track"></span>
+        <span class="thumb"></span>
+      </label>
+    </div>
+
+    <div class="row">
+      <div class="label">
+        <strong>Notifications</strong>
+        <span>Show “Fast/Normal” toast</span>
+      </div>
+      <label class="switch" title="Notifications">
+        <input id="notify" type="checkbox" />
+        <span class="track"></span>
+        <span class="thumb"></span>
+      </label>
+    </div>
+
+    <div class="box">
+      <h3>Normal</h3>
+      <div class="control">
+        <input id="normalSpeed" type="number" min="0.25" step="0.25" value="1" />
+        <button id="applyNormal">Apply</button>
+      </div>
+    </div>
+
+    <div class="box">
+      <h3>Fast (hold)</h3>
+      <div class="control">
+        <input id="fastSpeed" type="number" min="0.25" step="0.25" value="2" />
+        <button id="applyFast">Save</button>
+      </div>
+    </div>
+
+    <div class="row" style="margin-top:12px;">
+      <div class="label">
+        <strong>Hold key</strong>
+        <span>Single letter (A–Z)</span>
+      </div>
+      <div class="control" style="gap:8px;">
+        <input id="holdKey" type="text" maxlength="1" value="Z" />
+        <button id="applyKey">Save</button>
+      </div>
+    </div>
+
+    
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

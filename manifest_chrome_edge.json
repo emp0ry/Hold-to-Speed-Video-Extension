@@ -1,0 +1,40 @@
+{
+  "manifest_version": 3,
+  "name": "Hold to Speed Video",
+  "version": "3.3.0",
+  "description": "Hold a key (default Z) to temporarily speed up any HTML5 video.",
+  "action": {
+    "default_title": "Hold to Speed Video",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icon.png",
+      "48": "icon.png",
+      "128": "icon.png"
+    }
+  },
+  "icons": {
+    "16": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
+  },
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "contentScript.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}
